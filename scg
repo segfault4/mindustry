@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# scg: generate supply crew code, copy into clipboard
+
+
+unit="${1:-flare}"
+unitcount="${2:-3}"
+
+item1="${3:-null}"
+max1="${4:-0}"
+item2="${5:-null}"
+max2="${6:-0}"
+item3="${7:-null}"
+max3="${8:-0}"
+item4="${9:-null}"
+max4="${10:-0}"
+
+curl https://raw.githubusercontent.com/StormyBytes/LogiDustry/main/scripts/resource/transfer/supply_crew.mlog |
+	sed -e "/set unitType @flare/s/@flare/@$unit/" \
+		-e "/set unitAmount 1/s/1/$unitcount/" \
+		-e "/set minRes 2e3/s/2e3/0/" \ # minres is just plain stupid
+		-e "/set item1 null/s/null/@$item1/" \
+		-e "/set item2 null/s/null/@$item2/" \
+		-e "/set item3 null/s/null/@$item3/" \
+		-e "/set item4 null/s/null/@$item4/" \
+		-e "/set max1 0/s/0/@$max1/" \
+		-e "/set max2 0/s/0/@$max2/" \
+		-e "/set max3 0/s/0/@$max3/" \
+		-e "/set max4 0/s/0/@$max4/" \
+		-e "/set editDone 0/s/0/1/" \
+		| xclip -i -selection clipboard

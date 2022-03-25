@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# readme: generate README
+find . -type f -not -path '*/.*' -perm 755 | sed 's/^\.\///g' |
+	while read -r filename; do
+		printf "%-10s" "$filename"
+		sed -n '3p' "$filename" | sed 's/#.*:[[:space:]]*//g'
+	done
